@@ -7,7 +7,7 @@ const APIPath = 'packages/api/'
 
 const setupConfigFile = './setup.config.json'
 // TODO: add support for Windows
-const AWSCredentials = (username) => `/Users/${username}/.aws/credentials`
+const AWSCredentials = (username) => `/home/${username}/.aws/credentials`
 const packageJson = 'package.json'
 const servelessStack = 'serverless.yaml'
 const manifest = 'public/manifest.json'
