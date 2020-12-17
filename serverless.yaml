@@ -66,6 +66,8 @@ custom:
     production:
       profile: myapp_prod
       logRetentionInDays: 14
+      retainDataResources: true
+      pointInTimeRecoveryEnabled: true
       api:
         domainEnabled: false
         domainName: api.example.com
@@ -194,6 +196,10 @@ resources:
       !Equals
         - ${{self:custom.customDomain.enabled}}
         - true
+    RetainDataResources:
+      !Equals
+        - ${{self:custom.stageConfig.retainDataResources, false}}
+        - true
   
   Resources:
     AcmCertificate:
@@ -207,6 +213,7 @@ resources:
 
     UserTable:
       Type: AWS::DynamoDB::Table
+      DeletionPolicy: !If [RetainDataResources, Retain, Delete]
       Properties:
         BillingMode: PAY_PER_REQUEST
         PointInTimeRecoverySpecification:
@@ -220,6 +227,7 @@ resources:
 
     CognitoUserPool:
       Type: AWS::Cognito::UserPool
+      DeletionPolicy: !If [RetainDataResources, Retain, Delete]
       Properties:
         Policies:
           PasswordPolicy:
@@ -240,6 +248,7 @@ resources:
 
     CognitoUserPoolClient:
       Type: AWS::Cognito::UserPoolClient
+      DeletionPolicy: !If [RetainDataResources, Retain, Delete]
       Properties:
         UserPoolId: !Ref CognitoUserPool
         ClientName: CognitoIdentityPool
@@ -248,6 +257,7 @@ resources:
 
     CognitoIdentityPool:
       Type: AWS::Cognito::IdentityPool
+      DeletionPolicy: !If [RetainDataResources, Retain, Delete]
       Properties:
         AllowUnauthenticatedIdentities: false
         # SupportedLoginProviders:
@@ -305,6 +315,7 @@ resources:
 
     CognitoIdentityPoolRoles:
       Type: AWS::Cognito::IdentityPoolRoleAttachment
+      DeletionPolicy: !If [RetainDataResources, Retain, Delete]
       Properties:
         IdentityPoolId: !Ref CognitoIdentityPool
         Roles:
