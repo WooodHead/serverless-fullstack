@@ -1,8 +1,14 @@
 import 'source-map-support/register'
 import serverlessExpress from '@vendia/serverless-express'
 import app from './app'
+import { log, addLogMetadata } from '../../utils/logger'
 
-const binaryMimeTypes = []
-const server = serverlessExpress.createServer(app, null, binaryMimeTypes)
+const serverlessExpressInstance = serverlessExpress({
+  app,
+  // log,
+})
 
-export const handler = (event, context) => serverlessExpress.proxy(server, event, context)
+export const handler = (event, context) => {
+  addLogMetadata({ metadata: { awsRequestId: context.awsRequestId } })
+  return serverlessExpressInstance(event, context)
+}

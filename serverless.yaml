@@ -20,6 +20,7 @@ provider:
     # Enable connection reuse for AWS SDK for instant performance boost
     # https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/node-reusing-connections.html
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1
+  cors: true
 
 package:
   individually: true
@@ -31,13 +32,11 @@ plugins:
   - serverless-plugin-tracing
   - serverless-iam-roles-per-function
   - serverless-webpack
-  # - serverless-apigateway-service-proxy
-  # - serverless-plugin-split-stacks
   - serverless-stack-output
   - serverless-cloudside-plugin
   - serverless-plugin-aws-alerts
   # - '../serverless-amplify-plugin'
-  - '@wizeline/serverless-amplify-plugin'
+  - '@brettstack/serverless-amplify-plugin'
   - serverless-offline
   - serverless-stack-termination-protection
 
@@ -66,7 +65,7 @@ custom:
     production:
       profile: myapp_prod
       logRetentionInDays: 14
-      retainDataResources: true
+      deletionPolicy: Retain
       pointInTimeRecoveryEnabled: true
       api:
         domainEnabled: false
@@ -77,6 +76,7 @@ custom:
       alarms:
         notificationEmail: alert@example.com
   stageConfig: ${{self:custom.stages.${{self:provider.stage}}}}
+  deletionPolicy: ${{self:custom.stageConfig.deletionPolicy, 'Delete'}}
   prune:
     automatic: true
     number: 10
@@ -88,31 +88,25 @@ custom:
   serverless-offline:
     httpPort: 4911
     noPrependStageInUrl: true
-    useChildProcesses: true # hack to get watching working
-    useSeparateProcesses: true
   amplify:
     isManual: true
     domainName: ${{self:custom.stageConfig.amplify.domainName, ''}}
     buildSpecValues:
-      artifactBaseDirectory: packages/ui/build
+      artifactBaseDirectory: packages/ui/out
       preBuildWorkingDirectory: packages/ui
     buildCommandEnvVars:
-      prefix: 'REACT_APP_'
+      prefix: 'NEXT_PUBLIC_'
       allow:
         - ApiEndpoint
-        - CognitoIdentityPoolId,
-        - CognitoUserPoolId,
-        - CognitoUserPoolClientId,
+        - CognitoIdentityPoolId
+        - CognitoUserPoolId
+        - CognitoUserPoolClientId
   webpack:
     webpackConfig: ./functions.webpack.config.js
   output:
-    file: ./stack-outputs.json
-  # TODO: Add custom splitting with ./split-stack-splitter.js
-  # splitStacks:
-  #   perFunction: true
-  #   custom: ./split-stack-splitter.js
+    file: ./stack-outputs.${{self:provider.stage}}.json
   alerts:
-    dashboards: true
+    dashboards: false
     nameTemplate: $[functionName]-$[metricName]-Alarm
     topics:
       alarm:
@@ -177,11 +171,11 @@ functions:
         Resource:
           - !GetAtt UserTable.Arn
 
-  autoConfirmUser:
-    handler: packages/api/functions/cognito/auto-confirm-user.handler
+  cognitoPreSignup:
+    handler: packages/api/functions/cognito/cognito-pre-signup.handler
 
-  postAuthN:
-    handler: packages/api/functions/cognito/post-authentication.handler
+  cognitoPostConfirmation:
+    handler: packages/api/functions/cognito/cognito-post-confirmation.handler
     iamRoleStatements:
       - Effect: "Allow"
         Action:
@@ -196,10 +190,6 @@ resources:
       !Equals
         - ${{self:custom.customDomain.enabled}}
         - true
-    RetainDataResources:
-      !Equals
-        - ${{self:custom.stageConfig.retainDataResources, false}}
-        - true
   
   Resources:
     AcmCertificate:
@@ -213,21 +203,21 @@ resources:
 
     UserTable:
       Type: AWS::DynamoDB::Table
-      DeletionPolicy: !If [RetainDataResources, Retain, Delete]
+      DeletionPolicy: ${{self:custom.stageConfig.deletionPolicy}}
       Properties:
         BillingMode: PAY_PER_REQUEST
         PointInTimeRecoverySpecification:
-          PointInTimeRecoveryEnabled: false
+          PointInTimeRecoveryEnabled: true
         KeySchema:
           - KeyType: HASH
-            AttributeName: id
+            AttributeName: userId
         AttributeDefinitions:
-          - AttributeName: id
+          - AttributeName: userId
             AttributeType: S
 
     CognitoUserPool:
       Type: AWS::Cognito::UserPool
-      DeletionPolicy: !If [RetainDataResources, Retain, Delete]
+      DeletionPolicy: ${{self:custom.stageConfig.deletionPolicy}}
       Properties:
         Policies:
           PasswordPolicy:
@@ -243,12 +233,12 @@ resources:
         #   ReplyToEmailAddress: no-reply@halfstack.software
         #   SourceArn: arn:aws:ses:us-east-1:xxxx:identity/no-reply@halfstack.software
         LambdaConfig:
-          PreSignUp: !GetAtt AutoConfirmUserLambdaFunction.Arn
-          PostAuthentication: !GetAtt PostAuthNLambdaFunction.Arn
+          PreSignUp: !GetAtt CognitoPreSignupLambdaFunction.Arn
+          PostConfirmation: !GetAtt CognitoPostConfirmationLambdaFunction.Arn
 
     CognitoUserPoolClient:
       Type: AWS::Cognito::UserPoolClient
-      DeletionPolicy: !If [RetainDataResources, Retain, Delete]
+      DeletionPolicy: ${{self:custom.stageConfig.deletionPolicy}}
       Properties:
         UserPoolId: !Ref CognitoUserPool
         ClientName: CognitoIdentityPool
@@ -257,7 +247,7 @@ resources:
 
     CognitoIdentityPool:
       Type: AWS::Cognito::IdentityPool
-      DeletionPolicy: !If [RetainDataResources, Retain, Delete]
+      DeletionPolicy: ${{self:custom.stageConfig.deletionPolicy}}
       Properties:
         AllowUnauthenticatedIdentities: false
         # SupportedLoginProviders:
@@ -268,20 +258,21 @@ resources:
           - ClientId: !Ref CognitoUserPoolClient
             ProviderName: !GetAtt CognitoUserPool.ProviderName
 
-    # Allow Cognito to invoke the cognitoAutoConfirm and cognitoPostAuthN functions
-    AutoConfirmUserLambdaCognitoPermission:
+    # Allow Cognito to invoke the cognitoPreSignup function
+    CognitoPreSignupLambdaCognitoPermission:
       Type: AWS::Lambda::Permission
       Properties:
         Action: lambda:InvokeFunction
-        FunctionName: !GetAtt AutoConfirmUserLambdaFunction.Arn
+        FunctionName: !GetAtt CognitoPreSignupLambdaFunction.Arn
         Principal: cognito-idp.amazonaws.com
         SourceArn: !GetAtt CognitoUserPool.Arn
 
-    PostAuthNLambdaCognitoPermission:
+    # Allow Cognito to invoke the cognitoPostConfirmation function
+    CognitoPostConfirmationLambdaCognitoPermission:
       Type: AWS::Lambda::Permission
       Properties:
         Action: lambda:InvokeFunction
-        FunctionName: !GetAtt PostAuthNLambdaFunction.Arn
+        FunctionName: !GetAtt CognitoPostConfirmationLambdaFunction.Arn
         Principal: cognito-idp.amazonaws.com
         SourceArn: !GetAtt CognitoUserPool.Arn
 
@@ -315,7 +306,7 @@ resources:
 
     CognitoIdentityPoolRoles:
       Type: AWS::Cognito::IdentityPoolRoleAttachment
-      DeletionPolicy: !If [RetainDataResources, Retain, Delete]
+      DeletionPolicy: ${{self:custom.stageConfig.deletionPolicy}}
       Properties:
         IdentityPoolId: !Ref CognitoIdentityPool
         Roles:

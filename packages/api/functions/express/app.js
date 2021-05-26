@@ -1,16 +1,46 @@
 import express from 'express'
-import bodyParser from 'body-parser'
 import cors from 'cors'
+import { getCurrentInvoke } from '@vendia/serverless-express'
+import { StatusCodes } from 'http-status-codes'
+import meRouter from './routes/me'
 import usersRouter from './routes/users'
-
-const IS_PRODUCTION = process.env.NODE_ENV === 'production'
+import {
+  NotFoundError,
+  UnauthenticatedError,
+  UserInputError,
+  BadRequestError,
+} from '../../errors'
+import { IS_PRODUCTION } from '../../constants'
+import { log } from '../../utils/logger'
 
 const app = express()
 const router = express.Router()
 // router.use(cookieParser())
 router.use(cors())
-router.use(bodyParser.json())
+router.use(express.json())
+// app.use(express.urlencoded({
+//   extended: true
+// }));
+
+// Cognito middleware
+router.use((req, res, next) => {
+  const { event } = getCurrentInvoke()
+  const { claims } = event.requestContext.authorizer
+
+  if (!claims || !claims.sub) throw new UnauthenticatedError()
+
+  const { sub: userId, email } = claims
+  const groups = claims['cognito:groups']
+  req.cognitoUser = {
+    userId,
+    email,
+    groups,
+  }
+  next()
+})
+
 app.use('/', router)
+app.use('/me', meRouter)
 app.use('/users', usersRouter)
 
 app.use((req, res, next) => {
@@ -29,10 +59,20 @@ app.use((err, req, res, next) => {
   if (!IS_PRODUCTION) {
     response.trace = err.stack
   }
-
-  res
-    .status(statusCode)
-    .json(response)
+  if (err instanceof UserInputError) {
+    res.status(StatusCodes.UNPROCESSABLE_ENTITY).json({ errors: err.errors })
+  } else if (err instanceof UnauthenticatedError) {
+    res.status(StatusCodes.UNAUTHORIZED).json()
+  } else if (err instanceof BadRequestError) {
+    res.status(StatusCodes.BAD_REQUEST).json({ message: err.message })
+  } else if (err instanceof NotFoundError) {
+    res.status(StatusCodes.NOT_FOUND).json({ message: err.message })
+  } else {
+    res
+      .status(statusCode)
+      .json(response)
+  }
+  log.error(`An error occur while processing ${req.method}: ${req.originalUrl} API`, err)
 })
 
 export default app

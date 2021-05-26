@@ -14,5 +14,6 @@ stats.json
 coverage
 .webpack
 stack-outputs.json
+stack-outputs.development.json
 
 wizeline-academy/

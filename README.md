@@ -151,7 +151,6 @@ By default, Cognito forces users to verify their email address, but this kit com
 - [ ] CloudFormation rollback triggers
 - [ ] Enable stack termination protection on prod and staging
 - [ ] Add [lumigo-cli](https://www.npmjs.com/package/lumigo-cli), especially for tuning
-- [ ] Split stacks to mitigate chance of hitting CloudFormation 200 resource limit
 - [ ] Additional unit/integration tests
 - [ ] End-to-end tests (with Cypress?)
 - [ ] Make it easy to disable PR Previews for open-source projects where you don't want to allow people to create resources in your AWS account. 🔒
