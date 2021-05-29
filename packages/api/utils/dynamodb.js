@@ -8,8 +8,8 @@ const { AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, NODE_ENV } = process.env
 
 // For local development, get creds from ~/.aws/credentials
 // Alternatively, set AWS_PROFILE env var
-if (NODE_ENV != 'test' && (!AWS_ACCESS_KEY_ID || !AWS_SECRET_ACCESS_KEY)) {
-  const credentials = new AWS.SharedIniFileCredentials({ profile: 'civ6_dev' })
+if (NODE_ENV !== 'test' && (!AWS_ACCESS_KEY_ID || !AWS_SECRET_ACCESS_KEY)) {
+  const credentials = new AWS.SharedIniFileCredentials({ profile: 'myapp_dev' })
   AWS.config.credentials = credentials
   // TODO: V3
   // const s3Client = new S3.S3Client({
@@ -28,3 +28,14 @@ if (process.env.MOCK_DYNAMODB_ENDPOINT) {
 }
 
 export const dynamoDbDocumentClient = new DynamoDB.DocumentClient(dynamoDbConfig)
+
+export function dynamoCreateItem({ Entity, attributes }) {
+  return Entity.put(attributes, {
+    conditions: [
+      {
+        attr: Entity.schema.keys.partitionKey,
+        exists: false,
+      },
+    ],
+  })
+}

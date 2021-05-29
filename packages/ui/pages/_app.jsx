@@ -4,7 +4,7 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 import Amplify, { Auth } from 'aws-amplify'
 import axios from 'axios'
 import { useRouter } from 'next/router'
-import GlobalLoadingIndicator from '../components/GlobalLoadingIndicator'
+// import GlobalLoadingIndicator from '../components/GlobalLoadingIndicator'
 
 axios.defaults.baseURL = process.env.NEXT_PUBLIC_ApiEndpoint
 Amplify.configure({

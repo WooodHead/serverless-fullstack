@@ -1,0 +1,23 @@
+provider:
+  environment:
+    USER_TABLE: !Ref UserTable
+
+resources:
+  Resources:
+    UserTable:
+      Type: AWS::DynamoDB::Table
+      DeletionPolicy: ${{self:custom.stageConfig.deletionPolicy}}
+      Properties:
+        BillingMode: PAY_PER_REQUEST
+        PointInTimeRecoverySpecification:
+          PointInTimeRecoveryEnabled: true
+        KeySchema:
+          - KeyType: HASH
+            AttributeName: userId
+        AttributeDefinitions:
+          - AttributeName: userId
+            AttributeType: S
+
+  Outputs:
+    UserTableName:
+      Value: !Ref UserTable

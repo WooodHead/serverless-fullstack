@@ -2,13 +2,17 @@ import { createUser } from '../../controllers/user'
 
 export const handler = async (event) => {
   const {
-    sub: cognitoUserId,
+    sub: userId,
     email,
     name,
   } = event.request.userAttributes
-  console.info(`Creating User: Email: ${email}; Name: ${name}; User ID: ${cognitoUserId}`)
+  console.info(`Creating User: Email: ${email}; Name: ${name}; User ID: ${userId}`)
+  const user = {
+    name,
+    email,
+  }
   try {
-    await createUser({ cognitoUserId, name, email })
+    await createUser({ userId, user })
   } catch (error) {
     console.error(error)
     return event

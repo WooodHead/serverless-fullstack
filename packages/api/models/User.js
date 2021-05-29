@@ -1,5 +1,5 @@
 import { Table, Entity } from 'dynamodb-toolbox'
-import { dynamoDbDocumentClient } from '../dynamodb-init'
+import { dynamoDbDocumentClient } from '../utils/dynamodb'
 
 const UserTable = new Table({
   name: process.env.USER_TABLE,
@@ -11,7 +11,6 @@ const User = new Entity({
   name: 'User',
   attributes: {
     userId: { partitionKey: true },
-    cognitoUserId: { type: 'string' },
     email: { type: 'string' },
     name: { type: 'string' },
   },

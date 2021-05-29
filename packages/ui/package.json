@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 3002",
+    "dev": "next dev -p 3000",
     "dev:offline": "NEXT_PUBLIC_ApiEndpoint=http://localhost:4911 npm run dev",
     "build-only": "next build",
     "build": "npm run export",

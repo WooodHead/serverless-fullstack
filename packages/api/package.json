@@ -5,8 +5,7 @@
   "main": "handler.js",
   "scripts": {
     "test": "jest",
-    "test:watch": "npm run test -- --watch",
-    "dev": "LAMBDA_RUNTIME=nodejs12.x sls offline cloudside --cloudStage=development"
+    "test:watch": "npm run test -- --watch"
   },
   "keywords": [],
   "author": "",

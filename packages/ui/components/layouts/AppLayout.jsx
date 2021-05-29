@@ -2,11 +2,10 @@ import React from 'react'
 import {
   Image,
   Layout,
-  Menu,
 } from 'antd'
 import Link from 'next/link'
-import { UserOutlined, LogoutOutlined } from '@ant-design/icons'
 import BaseLayout from './BaseLayout'
+import SideMenu from './SideMenu'
 import { useMeQuery, useCurrentUserQuery } from '../../lib/me'
 import theme from '../../themes/base'
 
@@ -44,20 +43,7 @@ const AppLayout = ({ children, selectedKey, pageTitle }) => {
           <Link href="/" passHref>
             <Logo />
           </Link>
-          <Menu
-            className="siderMenu"
-            defaultSelectedKeys={[selectedKey]}
-            selectedKeys={[selectedKey]}
-            mode="inline"
-            theme="dark"
-          >
-            <Menu.Item key="profile" icon={<UserOutlined />}>
-              <Link href="/profile">Profile</Link>
-            </Menu.Item>
-            <Menu.Item key="logout" icon={<LogoutOutlined />}>
-              <Link href="/logout">Logout</Link>
-            </Menu.Item>
-          </Menu>
+          <SideMenu selectedKey={selectedKey} />
         </Layout.Sider>
         <Layout className="siteLayout">
           <Layout.Content className="mainContent">

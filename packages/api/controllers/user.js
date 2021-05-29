@@ -1,25 +1,24 @@
 import User from '../models/User'
-import { generateId } from '../utils/id'
 import { log } from '../utils/logger'
-import { validateId } from '../validators/common'
+import { dynamoCreateItem } from '../utils/dynamodb'
 
-export function createUser({
-  userId = generateId(),
-  cognitoUserId,
-  email,
-  name,
+export async function createUser({
+  userId,
+  user,
 }) {
-  log.debug('USER_CONTROLLER:createUser', { userId, name, email })
-  validateId(userId)
+  if (!userId) throw new Error('userId is required')
+  if (!user) throw new Error('user is required')
+  log.debug('USER_CONTROLLER:createUser', { userId, user })
 
-  if (!name) throw new Error('name is required')
-
-  return User.put({
+  const newItemAttributes = {
+    ...user,
     userId,
-    cognitoUserId,
-    email,
-    name,
-  })
+  }
+  const userItem = await dynamoCreateItem({ Entity: User, attributes: newItemAttributes })
+
+  log.info('USER_CONTROLLER:USER_CREATED', { userItem })
+
+  return userItem
 }
 
 export async function getUser({ userId }) {
