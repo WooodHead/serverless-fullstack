@@ -9,8 +9,10 @@ import SideMenu from './SideMenu'
 import { useMeQuery, useCurrentUserQuery } from '../../lib/me'
 import theme from '../../themes/base'
 
-const Logo = React.forwardRef(({ onClick, href }, ref) => (
-  <a href={href} onClick={onClick} ref={ref}>
+const fontSizeBase = theme['font-size-base']
+
+const Logo = React.forwardRef(({ href }, ref) => (
+  <a href={href} ref={ref}>
     <Image
       className="logo"
       src="/logo.png"
@@ -24,7 +26,7 @@ const Logo = React.forwardRef(({ onClick, href }, ref) => (
         }
         .logo {
           margin-top: 8px;
-          margin-left: ${theme.fontSizeBase};
+          margin-left: ${fontSizeBase};
           width: 110px;
         }
       `}
@@ -68,12 +70,12 @@ const AppLayout = ({ children, selectedKey, pageTitle }) => {
             }
 
             .mainContent {
-              margin: ${theme.fontSizeBase};
-              overflow: initial;
+              margin: ${fontSizeBase};
+              overflow: auto;
             }
 
             .ant-breadcrumb {
-              margin-bottom: ${theme.fontSizeBase};
+              margin-bottom: ${fontSizeBase};
             }
         `}
         </style>

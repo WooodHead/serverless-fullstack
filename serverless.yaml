@@ -2,13 +2,13 @@ service: myapp${{env:SERVERLESS_SERVICE_SUFFIX, ''}}
 provider:
   name: aws
   stackName: ${{self:service}}-${{self:provider.stage}}
-  runtime: nodejs12.x
+  runtime: nodejs14.x
   memorySize: 1024
   timeout: 6
   logRetentionInDays: ${{self:custom.stages.${{self:provider.stage}}.logRetentionInDays}}
   stage: ${{opt:stage, env:NODE_ENV, 'development'}}
   profile: ${{self:custom.stageConfig.profile}}
-  region: us-west-2
+  region: ap-southeast-2
   variableSyntax: "\\${{([ ~:a-zA-Z0-9._@\\'\",\\-\\/\\(\\)]+?)}}"
   logs:
     restApi:
@@ -32,8 +32,8 @@ plugins:
   - serverless-stack-output
   - serverless-cloudside-plugin
   - serverless-plugin-aws-alerts
-  # - '../serverless-amplify-plugin'
-  - '@brettstack/serverless-amplify-plugin'
+  - '../../../../serverless-amplify-plugin'
+  # - '@brettstack/serverless-amplify-plugin'
   - serverless-offline
   - serverless-stack-termination-protection
   - serverless-plugin-modularize
@@ -88,6 +88,7 @@ custom:
     noPrependStageInUrl: true
   amplify:
     isManual: true
+    addNextPageRedirects: true
     domainName: ${{self:custom.stageConfig.amplify.domainName, ''}}
     buildSpecValues:
       artifactBaseDirectory: packages/ui/out
@@ -99,10 +100,12 @@ custom:
         - CognitoIdentityPoolId
         - CognitoUserPoolId
         - CognitoUserPoolClientId
+        - Region
   webpack:
     webpackConfig: ./functions.webpack.config.js
   output:
     file: ./stack-outputs.${{self:provider.stage}}.json
+    handler: stack-outputs.handler
   alerts:
     dashboards: false
     nameTemplate: $[functionName]-$[metricName]-Alarm

@@ -13,12 +13,12 @@ if (NODE_ENV !== 'test' && (!AWS_ACCESS_KEY_ID || !AWS_SECRET_ACCESS_KEY)) {
   AWS.config.credentials = credentials
   // TODO: V3
   // const s3Client = new S3.S3Client({
-  //   credentials: fromIni({ profile: 'rarecamp_dev' })
+  //   credentials: fromIni({ profile: 'myapp_dev' })
   // });
 }
 
 const dynamoDbConfig = {
-  region: 'us-west-2',
+  region: 'ap-southeast-2',
 }
 
 if (process.env.MOCK_DYNAMODB_ENDPOINT) {

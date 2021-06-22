@@ -16,9 +16,20 @@ Amplify.configure({
   },
   ssr: false,
 })
-const queryClient = new QueryClient()
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry(failureCount, error) {
+        const errorResponseStatus = error?.response?.status?.toString()
+        if (errorResponseStatus?.startsWith('4')) return false
 
-function MyAppWrapper(props) {
+        return failureCount > 2
+      },
+    },
+  },
+})
+
+function AppWrapper(props) {
   const router = useRouter()
   // Set Authorization header on all requests if user is signed in
   // Othwerise, redirect to login page
@@ -38,12 +49,12 @@ function MyAppWrapper(props) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <MyApp {...props} />
+      <App {...props} />
     </QueryClientProvider>
   )
 }
 
-function MyApp({ Component, pageProps }) {
+function App({ Component, pageProps }) {
   return (
     <>
       {/* <GlobalLoadingIndicator /> */}
@@ -52,4 +63,4 @@ function MyApp({ Component, pageProps }) {
   )
 }
 
-export default MyAppWrapper
+export default AppWrapper
