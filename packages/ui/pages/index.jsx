@@ -26,9 +26,9 @@ export default function IndexPage() {
 
 function AuthenticatedRoot() {
   return (
-    <AppLayout pageTitle="Home" selectedKey="profile">
+    <AppLayout pageTitle='Home' selectedKey='profile'>
       <Breadcrumb>
-        <Breadcrumb.Item href="/">
+        <Breadcrumb.Item href='/'>
           <HomeOutlined />
         </Breadcrumb.Item>
         <Breadcrumb.Item>
@@ -47,16 +47,16 @@ function AuthenticatedRoot() {
 function Login() {
   const signInMutation = useSignInMutation()
   return (
-    <UnauthenticatedLayout pageTitle="Login">
+    <UnauthenticatedLayout pageTitle='Login'>
       <Form
-        layout="vertical"
-        name="login_form"
+        layout='vertical'
+        name='login_form'
         initialValues={{ remember: true }}
         onFinish={signInMutation.mutate}
       >
         <Form.Item
-          label="Email"
-          name="username"
+          label='Email'
+          name='username'
           required={false}
           rules={[
             {
@@ -66,11 +66,11 @@ function Login() {
             },
           ]}
         >
-          <Input type="email" />
+          <Input type='email' />
         </Form.Item>
         <Form.Item
-          label="Password"
-          name="password"
+          label='Password'
+          name='password'
           required={false}
           rules={[
             {
@@ -82,21 +82,21 @@ function Login() {
           <Input.Password />
         </Form.Item>
         <Form.Item>
-          <Form.Item name="remember" valuePropName="checked" noStyle>
+          <Form.Item name='remember' valuePropName='checked' noStyle>
             <Checkbox>Remember me</Checkbox>
           </Form.Item>
           <Button
             loading={signInMutation.isLoading}
             style={{ float: 'right' }}
-            type="primary"
-            htmlType="submit"
+            type='primary'
+            htmlType='submit'
           >
             Sign in
           </Button>
         </Form.Item>
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-          <Link href="/register">Register</Link>
-          <Link href="/forgot-password">Forgot your password?</Link>
+          <Link href='/register'>Register</Link>
+          <Link href='/forgot-password'>Forgot your password?</Link>
         </div>
       </Form>
     </UnauthenticatedLayout>

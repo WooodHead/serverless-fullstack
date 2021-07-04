@@ -10,11 +10,11 @@ export default function UnauthenticatedLayout({
     <BaseLayout pageTitle={pageTitle}>
       <Layout>
         <Layout.Content>
-          <Card className="layout-container">
-            <div className="auth-form">
+          <Card className='layout-container'>
+            <div className='auth-form'>
               <Image
-                src="/welcome.png"
-                alt="Welcome"
+                src='/welcome.png'
+                alt='Welcome'
                 preview={false}
               />
               {children}

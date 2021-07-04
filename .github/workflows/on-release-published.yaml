@@ -5,6 +5,8 @@ on:
     types:
     - published
 
+concurrency: on-release-published
+
 jobs:
   deploy_prod:
     runs-on: ubuntu-latest

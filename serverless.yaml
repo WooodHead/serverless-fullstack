@@ -32,8 +32,8 @@ plugins:
   - serverless-stack-output
   - serverless-cloudside-plugin
   - serverless-plugin-aws-alerts
-  - '../../../../serverless-amplify-plugin'
-  # - '@brettstack/serverless-amplify-plugin'
+  # - '../serverless-amplify-plugin'
+  - '@brettstack/serverless-amplify-plugin'
   - serverless-offline
   - serverless-stack-termination-protection
   - serverless-plugin-modularize

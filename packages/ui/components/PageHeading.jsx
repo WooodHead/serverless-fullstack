@@ -12,7 +12,7 @@ export default function PageHeading({
     <Space>
       <PageTitle title={title} />
       {description ? (
-        <Tooltip placement="bottom" title={description}>
+        <Tooltip placement='bottom' title={description}>
           <InfoCircleOutlined />
         </Tooltip>
       ) : null}

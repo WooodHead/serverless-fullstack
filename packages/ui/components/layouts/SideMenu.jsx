@@ -6,17 +6,17 @@ import Link from 'next/link'
 export default function SideMenu({ selectedKey }) {
   return (
     <Menu
-      className="siderMenu"
+      className='siderMenu'
       defaultSelectedKeys={[selectedKey]}
       selectedKeys={[selectedKey]}
-      mode="inline"
-      theme="dark"
+      mode='inline'
+      theme='dark'
     >
-      <Menu.Item key="profile" icon={<UserOutlined />}>
-        <Link href="/profile">Profile</Link>
+      <Menu.Item key='profile' icon={<UserOutlined />}>
+        <Link href='/profile'>Profile</Link>
       </Menu.Item>
-      <Menu.Item key="logout" icon={<LogoutOutlined />}>
-        <Link href="/logout">Logout</Link>
+      <Menu.Item key='logout' icon={<LogoutOutlined />}>
+        <Link href='/logout'>Logout</Link>
       </Menu.Item>
     </Menu>
   )

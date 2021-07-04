@@ -14,9 +14,9 @@ const fontSizeBase = theme['font-size-base']
 const Logo = React.forwardRef(({ href }, ref) => (
   <a href={href} ref={ref}>
     <Image
-      className="logo"
-      src="/logo.png"
-      alt="logo"
+      className='logo'
+      src='/logo.png'
+      alt='logo'
       preview={false}
     />
     <style jsx global>
@@ -36,19 +36,20 @@ const Logo = React.forwardRef(({ href }, ref) => (
 
 const AppLayout = ({ children, selectedKey, pageTitle }) => {
   const currentUserQuery = useCurrentUserQuery()
+  // eslint-disable-next-line no-unused-vars
   const meQuery = useMeQuery({ isAuthenticated: Boolean(currentUserQuery.data) })
 
   return (
     <BaseLayout pageTitle={pageTitle}>
-      <Layout className="topLayout">
-        <Layout.Sider className="sider">
-          <Link href="/" passHref>
+      <Layout className='topLayout'>
+        <Layout.Sider className='sider'>
+          <Link href='/' passHref>
             <Logo />
           </Link>
           <SideMenu selectedKey={selectedKey} />
         </Layout.Sider>
-        <Layout className="siteLayout">
-          <Layout.Content className="mainContent">
+        <Layout className='siteLayout'>
+          <Layout.Content className='mainContent'>
             {children}
           </Layout.Content>
         </Layout>

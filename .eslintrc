@@ -1,8 +1,14 @@
 {
+  "root": true,
   "extends": [
-    "airbnb"
+    "airbnb",
   ],
   "parser": "babel-eslint",
+  "settings": {
+    "import/resolver": {
+      "babel-module": {}
+    }
+  },
   "env": {
     "node": true,
     "jest": true,
@@ -19,7 +25,7 @@
       "always-multiline"
     ],
     "max-len": [
-      "error",
+      "off",
       {
         "code": 200
       }
@@ -55,6 +61,13 @@
     "react/jsx-filename-extension": "off",
     "react/no-unescaped-entities": "off",
     "react/prop-types": "off",
-    "react/jsx-props-no-spreading": "off"
+    "consistent-return": "off",
+    "jsx-quotes": [
+      "error",
+      "prefer-single"
+    ],
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-props-no-spreading": "off",
+    "jsx-a11y/anchor-is-valid": "off"
   }
 }

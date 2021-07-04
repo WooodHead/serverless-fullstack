@@ -26,12 +26,12 @@ export default function SubHeader({ title, subTitle }) {
   const router = useRouter()
   return (
     <div>
-      <Button type="link" onClick={() => router.back()}>
+      <Button type='link' onClick={() => router.back()}>
         <ArrowLeftOutlined />
       </Button>
       <div>
         {title}
-        <div className="description">{subTitle}</div>
+        <div className='description'>{subTitle}</div>
       </div>
     </div>
   )

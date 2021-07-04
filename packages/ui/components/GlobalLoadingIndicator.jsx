@@ -17,7 +17,7 @@ export default function GlobalLoadingIndicator() {
       }}
       percent={100}
       showInfo={false}
-      status="active"
+      status='active'
     />
   ) : null
 }

@@ -27,14 +27,14 @@ export default function RestPassword() {
     <UnauthenticatedLayout>
       <Title level={3}>Reset your password</Title>
       <Form
-        layout="vertical"
-        name="reset_password_form"
+        layout='vertical'
+        name='reset_password_form'
         form={form}
         onFinish={resetPasswordMutation.mutate}
       >
         <Form.Item
-          label="Email"
-          name="username"
+          label='Email'
+          name='username'
           required={false}
           rules={[
             {
@@ -44,11 +44,11 @@ export default function RestPassword() {
             },
           ]}
         >
-          <Input type="email" />
+          <Input type='email' />
         </Form.Item>
         <Form.Item
-          label="Reset code"
-          name="code"
+          label='Reset code'
+          name='code'
           required={false}
           rules={[
             {
@@ -63,8 +63,8 @@ export default function RestPassword() {
 
         <Form.Item
           style={{ marginBottom: '10px' }}
-          label="New Password"
-          name="password"
+          label='New Password'
+          name='password'
           required={false}
           rules={[
             {
@@ -73,20 +73,20 @@ export default function RestPassword() {
             },
           ]}
         >
-          <Input.Password autoComplete="new-password" />
+          <Input.Password autoComplete='new-password' />
         </Form.Item>
 
         <Form.Item style={{ margin: '0' }}>
           <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
             <Button style={{ marginRight: '1rem' }}>
-              <Link href="/">Back to login</Link>
+              <Link href='/'>Back to login</Link>
             </Button>
             <Button
-              type="primary"
+              type='primary'
               disabled={resetPasswordMutation.isLoading}
               loading={resetPasswordMutation.isLoading}
-              htmlType="submit"
-              className="forgot-password-form-button"
+              htmlType='submit'
+              className='forgot-password-form-button'
             >
               Reset Password
             </Button>

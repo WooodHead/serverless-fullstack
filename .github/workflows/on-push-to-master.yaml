@@ -4,6 +4,8 @@ on:
   push:
     branches: [ master ]
 
+concurrency: on-push-to-master
+
 jobs:
   test-deploy-to-staging-and-package:
     runs-on: ubuntu-latest
