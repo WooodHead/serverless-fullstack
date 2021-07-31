@@ -1,9 +1,9 @@
 import 'regenerator-runtime/runtime'
 import eventMocks from '@serverless/event-mocks'
 import awsLambdaMockContext from 'aws-lambda-mock-context'
-import { handler } from './auto-confirm-user'
+import { handler } from './cognito-pre-signup'
 
-describe('auto-confirm-user: happy paths ', () => {
+describe('cognito-pre-signup: happy paths ', () => {
   test('Works', async () => {
     const context = awsLambdaMockContext()
     const event = eventMocks(

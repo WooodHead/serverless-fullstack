@@ -54,7 +54,7 @@ describe('api: happy paths', () => {
         'access-control-allow-origin': ['*'],
         'content-length': ['70'],
         'content-type': ['application/json; charset=utf-8'],
-        etag: ['W/"46-sJIzOhwjJFkevMddf52QxFC3kgc\"'],
+        etag: ['W/"46-sJIzOhwjJFkevMddf52QxFC3kgc"'],
         'x-powered-by': ['Express'],
       },
       statusCode: 200,

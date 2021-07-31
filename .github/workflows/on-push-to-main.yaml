@@ -1,10 +1,10 @@
-name: On push to master
+name: On push to main
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
 
-concurrency: on-push-to-master
+concurrency: on-push-to-main
 
 jobs:
   test-deploy-to-staging-and-package:

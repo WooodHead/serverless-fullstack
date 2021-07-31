@@ -1,11 +1,7 @@
 # Serverless FullStack starter
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/wizeline/serverless-fullstack/master/wizeline-amplify-serverless-banner.png" alt="wizeline, serverless, and amplify banner">
-</p>
-
-<p align="center">
-  <img src="https://raw.githubusercontent.com/wizeline/serverless-fullstack/master/docs/diagrams/cloud-architecture/software-architecture-diagram.png" alt="serverless software architecture diagram">
+  <img src="https://raw.githubusercontent.com/brettstack/serverless-fullstack/master/docs/diagrams/cloud-architecture/software-architecture-diagram.png" alt="serverless software architecture diagram">
 </p>
 
 Get started developing applications quickly with best practices using Serverless on AWS.
@@ -21,7 +17,7 @@ Get started developing applications quickly with best practices using Serverless
 To get started, run the following commands:
 
 ```
-git clone https://github.com/wizeline/serverless-fullstack
+git clone https://github.com/brettstack/serverless-fullstack
 cd serverless-fullstack
 npm run setup-file
 ```
@@ -57,7 +53,7 @@ Coming soon: setup script to automate this.
 
 ### UI
 
-<img src="https://raw.githubusercontent.com/wizeline/serverless-fullstack/master/docs/diagrams/cloud-architecture/static-website-hosting.png" alt="User Interface">
+<img src="https://raw.githubusercontent.com/brettstack/serverless-fullstack/master/docs/diagrams/cloud-architecture/static-website-hosting.png" alt="User Interface">
 
 The UI was bootstrapped with Create React App and modified to include an Auth flow using AWS Amplify and Cognito.
 
@@ -65,7 +61,7 @@ Static website hosting is provided by AWS Ampify, backed by S3 and CloudFront.
 
 ### Auth
 
-<img src="https://raw.githubusercontent.com/wizeline/serverless-fullstack/master/docs/diagrams/cloud-architecture/users-auth.png" alt="Auth">
+<img src="https://raw.githubusercontent.com/brettstack/serverless-fullstack/master/docs/diagrams/cloud-architecture/users-auth.png" alt="Auth">
 
 User authentication is provided by AWS Cognito.
 
@@ -73,19 +69,19 @@ Social sign-in coming soon.
 
 ### REST API
 
-<img src="https://raw.githubusercontent.com/wizeline/serverless-fullstack/master/docs/diagrams/cloud-architecture/rest-api.png" alt="API">
+<img src="https://raw.githubusercontent.com/brettstack/serverless-fullstack/master/docs/diagrams/cloud-architecture/rest-api.png" alt="API">
 
 A Node.js Express API running on Lambda and API Gateway allows for a familiar developer experience while leveraging the benefits of Serverless.
 
 ### Database
 
-<img src="https://raw.githubusercontent.com/wizeline/serverless-fullstack/master/docs/diagrams/cloud-architecture/data.png" alt="Data">
+<img src="https://raw.githubusercontent.com/brettstack/serverless-fullstack/master/docs/diagrams/cloud-architecture/data.png" alt="Data">
 
 DynamoDB is capable of scaling to meet any requirements you may have.
 
 ### Continuous Deployment (CI/CD)
 
-<img src="https://raw.githubusercontent.com/wizeline/serverless-fullstack/master/docs/diagrams/ci-cd/diagram.png" alt="Continuous Deployment">
+<img src="https://raw.githubusercontent.com/brettstack/serverless-fullstack/master/docs/diagrams/ci-cd/diagram.png" alt="Continuous Deployment">
 
 GitHub Actions is used to create a Continuous Deployment Pipeline from developer preview, to staging, to production. Each environment is deployed to an isolated AWS Account (optionally, these can be deployed to the same account for simplicity).
 
@@ -112,7 +108,7 @@ Serverless Framework is used to describe our infrastruture
 ## GitHub Actions Continuous Deployments (CI/CD)
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/wizeline/serverless-fullstack/master/docs/diagrams/ci-cd/serverless-fullstack-github-actions-cd.png" alt="serverless-fullstack github actions continous deployment flow diagram">
+  <img src="https://raw.githubusercontent.com/brettstack/serverless-fullstack/master/docs/diagrams/ci-cd/serverless-fullstack-github-actions-cd.png" alt="serverless-fullstack github actions continous deployment flow diagram">
 </p>
 
 ## Manual/developer deployments

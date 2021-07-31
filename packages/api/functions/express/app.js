@@ -72,7 +72,8 @@ app.use((err, req, res, next) => {
       .status(statusCode)
       .json(response)
   }
-  log.error(`An error occur while processing ${req.method}: ${req.originalUrl} API`, err)
+  log.error(`An error occurred while processing ${req.method}: ${req.originalUrl} API`)
+  log.error(error)
 })
 
 export default app
