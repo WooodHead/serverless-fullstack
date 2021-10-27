@@ -18,11 +18,17 @@ jobs:
       with:
         node-version: 14.x
     
-    - name: Install package
+    - name: Audit packages
       run: |
-        (npm ci && npm audit --audit-level high && npm test) & \
-        (cd packages/ui && npm ci && npm audit --audit-level high && npm test) & \
-        (cd packages/api && npm ci && npm audit --audit-level high && npm test)
+        (npm audit --audit-level critical) & \
+        (cd packages/ui && npm audit --audit-level critical) & \
+        (cd packages/api && npm audit --audit-level critical)
+    
+    - name: Install packages
+      run: npm ci --audit=false
+
+    - name: Test packages
+      run: npm test
 
     - name: Deploy to staging
       run: |

@@ -32,15 +32,10 @@ jobs:
         (cd packages/api && npm audit --audit-level critical)
     
     - name: Install packages
-      run: |
-        (npm ci) & \
-        (cd packages/ui && npm ci) & \
-        (cd packages/api && npm ci)
+      run: npm ci --audit=false
 
     - name: Test packages
-      run: |
-        (cd packages/ui && npm test) & \
-        (cd packages/api && npm test)
+      run: npm test
 
     - name: Deploy to sandboxed stack
       id: deploy_to_sandboxed_stack

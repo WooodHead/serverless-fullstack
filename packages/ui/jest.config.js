@@ -7,6 +7,6 @@ module.exports = {
     '<rootDir>/node_modules/',
   ],
   moduleNameMapper: {
-    '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
+    '\\.(css|less|scss|sass|less)$': 'identity-obj-proxy',
   },
 }
