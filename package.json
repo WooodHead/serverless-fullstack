@@ -6,7 +6,7 @@
   "main": "handler.js",
   "scripts": {
     "test": "(cd packages/ui && npm test) & (cd packages/api && npm test)",
-    "postinstall": "npm i --prefix ./packages/ui & npm i --prefix ./packages/api",
+    "postinstall": "cd packages/ui && npm i && cd ../api && npm i",
     "start:ui": "cd packages/ui && npm run dev",
     "start:ui:offline": "cd packages/ui && npm run dev:offline",
     "start:api": "sls offline cloudside --cloudStage=development",
