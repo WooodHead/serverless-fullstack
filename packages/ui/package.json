@@ -13,16 +13,16 @@
     "test": "jest"
   },
   "dependencies": {
-    "antd": "^4.12.3",
+    "antd": "^4.23.6",
     "aws-amplify": "^3.3.17",
     "aws-amplify-react": "^4.2.23",
-    "next": "^11.0.0",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "react-query": "^3.12.0"
+    "next": "^13.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-query": "^3.39.2"
   },
   "devDependencies": {
-    "@testing-library/react": "^11.2.7",
+    "@testing-library/react": "^13.4.0",
     "babel-plugin-import": "^1.13.3",
     "jest": "^26.6.3",
     "less": "^4.1.1",

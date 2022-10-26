@@ -11,8 +11,8 @@ import theme from '../../themes/base'
 
 const fontSizeBase = theme['font-size-base']
 
-const Logo = React.forwardRef(({ href }, ref) => (
-  <a href={href} ref={ref}>
+const Logo = () => (
+  <>
     <Image
       className='logo'
       src='/logo.png'
@@ -31,8 +31,8 @@ const Logo = React.forwardRef(({ href }, ref) => (
         }
       `}
     </style>
-  </a>
-))
+  </>
+)
 
 const AppLayout = ({ children, selectedKey, pageTitle }) => {
   const currentUserQuery = useCurrentUserQuery()
