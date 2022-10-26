@@ -4,6 +4,16 @@ import { Menu } from 'antd'
 import Link from 'next/link'
 
 export default function SideMenu({ selectedKey }) {
+  const items = [{
+    key: 'profile',
+    icon: <UserOutlined />,
+    label: <Link href='/profile'>Profile</Link>,
+  }, {
+    key: 'logout',
+    icon: <LogoutOutlined />,
+    label: <Link href='/logout'>Logout</Link>,
+  },
+  ]
   return (
     <Menu
       className='siderMenu'
@@ -11,13 +21,7 @@ export default function SideMenu({ selectedKey }) {
       selectedKeys={[selectedKey]}
       mode='inline'
       theme='dark'
-    >
-      <Menu.Item key='profile' icon={<UserOutlined />}>
-        <Link href='/profile'>Profile</Link>
-      </Menu.Item>
-      <Menu.Item key='logout' icon={<LogoutOutlined />}>
-        <Link href='/logout'>Logout</Link>
-      </Menu.Item>
-    </Menu>
+      items={items}
+    />
   )
 }
