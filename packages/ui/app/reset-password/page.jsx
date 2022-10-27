@@ -7,8 +7,7 @@ import {
 } from 'antd'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
-import UnauthenticatedLayout from '../components/layouts/UnauthenticatedLayout'
-import { useResetPasswordMutation } from '../lib/me'
+import { useResetPasswordMutation } from '../../lib/me'
 
 const { Title } = Typography
 
@@ -24,7 +23,7 @@ export default function RestPassword() {
   const resetPasswordMutation = useResetPasswordMutation()
 
   return (
-    <UnauthenticatedLayout>
+    <>
       <Title level={3}>Reset your password</Title>
       <Form
         layout='vertical'
@@ -93,6 +92,6 @@ export default function RestPassword() {
           </div>
         </Form.Item>
       </Form>
-    </UnauthenticatedLayout>
+    </>
   )
 }

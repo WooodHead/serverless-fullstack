@@ -6,8 +6,7 @@ import {
   Input,
 } from 'antd'
 import Link from 'next/link'
-import UnauthenticatedLayout from '../components/layouts/UnauthenticatedLayout'
-import { useForgotPasswordMutation } from '../lib/me'
+import { useForgotPasswordMutation } from '../../lib/me'
 
 const { Title } = Typography
 
@@ -15,7 +14,7 @@ export default function App() {
   const forgotPasswordMutation = useForgotPasswordMutation()
 
   return (
-    <UnauthenticatedLayout>
+    <>
       <Title level={3}>Forgot your password?</Title>
       <Form
         layout='vertical'
@@ -53,6 +52,6 @@ export default function App() {
           </div>
         </Form.Item>
       </Form>
-    </UnauthenticatedLayout>
+    </>
   )
 }

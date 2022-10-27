@@ -1,3 +1,5 @@
+'use client'
+
 import axios from 'axios'
 import { useQuery, useMutation } from 'react-query'
 import { Auth } from 'aws-amplify'
