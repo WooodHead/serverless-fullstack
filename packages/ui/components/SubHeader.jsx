@@ -1,6 +1,6 @@
 import React from 'react'
 import { ArrowLeftOutlined } from '@ant-design/icons'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import { Button } from 'antd'
 
 /*

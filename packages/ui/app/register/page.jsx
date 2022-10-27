@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 import {
   Button,
@@ -9,7 +11,6 @@ import { useSignUpMutation } from '../../lib/me'
 
 export default function App() {
   const signUpMutation = useSignUpMutation()
-
   return (
     <Form
       layout='vertical'

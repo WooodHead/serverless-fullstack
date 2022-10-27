@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useEffect } from 'react'
 import {
   Button,
@@ -5,7 +7,7 @@ import {
   Form,
   Input,
 } from 'antd'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { useResetPasswordMutation } from '../../lib/me'
 

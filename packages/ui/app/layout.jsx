@@ -5,7 +5,7 @@ import React from 'react'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import Amplify, { Auth } from 'aws-amplify'
 import axios from 'axios'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 // import GlobalLoadingIndicator from '../components/GlobalLoadingIndicator'
 import {
   Image,
