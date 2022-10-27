@@ -3,7 +3,7 @@
 import axios from 'axios'
 import { useQuery, useMutation } from 'react-query'
 import { Auth } from 'aws-amplify'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import { notification } from 'antd'
 
 export function useCurrentUserQuery({ redirectOnNotAuth = true } = {}) {
